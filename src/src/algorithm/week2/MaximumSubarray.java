@@ -5,9 +5,15 @@ public class MaximumSubarray {
     public int maxSubArray(int[] nums) {
         int globalTotal = nums[0];
         int total = nums[0];
-        int max = nums[0];
         for (int i = 1; i < nums.length; i++) {
-
+            if (total + nums[i] < nums[i]) {
+                total = nums[i];
+            } else {
+                total = total + nums[i];
+            }
+            if (globalTotal < total) {
+                globalTotal = total;
+            }
         }
 
         return globalTotal;
