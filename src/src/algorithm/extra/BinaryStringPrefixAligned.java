@@ -27,4 +27,15 @@ public class BinaryStringPrefixAligned {
         }
         return count;
     }
+
+    public int numTimesAllBlue2(int[] flips) {
+        int max = 0, result = 0;
+        for (int i = 0; i < flips.length ; i++) {
+            max = Math.max(max, flips[i]);
+            if (max == i) {
+                result++;
+            }
+        }
+        return result;
+    }
 }
