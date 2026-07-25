@@ -1,0 +1,129 @@
+package algorithm.codility.concept1;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Exercise {
+
+    public static class HSegment {
+        public int row;
+        public int colStart;
+        public int colEnd;
+        public int length;
+
+        public HSegment(int row, int colStart, int colEnd) {
+            this.row = row;
+            this.colStart = colStart;
+            this.colEnd = colEnd;
+            this.length = colEnd - colStart + 1;
+        }
+    }
+
+    public static class VSegment {
+        public int col;
+        public int rowStart;
+        public int rowEnd;
+        public int length;
+
+        public VSegment(int col, int rowStart, int rowEnd) {
+            this.col = col;
+            this.rowStart = rowStart;
+            this.rowEnd = rowEnd;
+            this.length = rowEnd - rowStart + 1;
+        }
+    }
+
+//    Exercise 1: Extract Horizontal Segments
+//    Scan each row and extract all continuous runs of specific cells ('.') as segments.
+
+    public static List<HSegment> extractHorizontalSegments(char[][] grid) {
+        List<HSegment> result = new ArrayList<>();
+        for (int i = 0; i < grid.length ; i++) {
+            int start = 0, end = 0;
+            boolean isClosed = true;
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] != '.' && !isClosed) {
+                    HSegment hSegment = new HSegment(i, start, end);
+                    result.add(hSegment);
+                    isClosed = true;
+                    continue;
+                }
+                if (grid[i][j] == '.' && isClosed) {
+                    start = end = j;
+                    isClosed = false;
+                } else {
+                    end = j;
+                }
+            }
+            if (!isClosed) {
+                HSegment hSegment = new HSegment(i, start, end);
+                result.add(hSegment);
+            }
+        }
+        return result;
+    }
+
+//    Exercise 2: Extract Vertical Segments
+//    Scan each column and extract all continuous runs of specific cells as segments.
+
+    public static List<VSegment> extractVerticalSegments(char[][] grid) {
+        return null;
+    }
+
+//    Exercise 3: Filter Best Per Row
+//    From list of HSegments, keep only the longest segment for
+//    each unique row. This reduces search space for pair enumeration
+    public static List<HSegment> filterBestPerRow(List<HSegment> hSegments) {
+        return null;
+    }
+
+//    Exercise 4: Filter Best Per Column
+//    From list of VSegments, keep only the longest segment for
+//    each unique column.
+    public static List<VSegment> filterBestPerColumn(List<VSegment> vSegments) {
+        return null;
+    }
+
+//    Exercise 5: Check Horizontal Overlap
+//    Two horizontal segments overlap if they're on the same row and
+//    their column ranges overlap.
+    public static boolean checkHorizontalOverlap(HSegment seg1, HSegment seg2) {
+        return false;
+    }
+
+//    Exercise 6: Check Vertical Overlap
+//    Two vertical segments overlap if they're on the same column and
+//    their row ranges overlap.
+    public static boolean checkVerticalOverlap(VSegment seg1, VSegment seg2) {
+        return false;
+    }
+
+//    Exercise 7: Check Cross Intersection
+//    Horizontal and vertical segments intersect if
+//    - V's columns is within H's column range
+//    - H's row is within V's row range
+    public static boolean checkCrossIntersection(HSegment hSegment, VSegment vSegment) {
+        return false;
+    }
+
+//    Exercise 8: Split Horizontal at Column
+//    Split horizontal segment at column (excluding thet column)
+//    Return lengths of left and right parts. Clamp negatives to zero
+    public static int[] splitHorizontalAtColumn(HSegment hSegment, int splitCol) {
+        return null;
+    }
+
+//    Exercise 9: Split Vertical at Row
+//    Split vertical segment at row (excluding that row)
+//    Return lengths of top and bottom parts.
+    public static int[] splitVerticalAtRow(VSegment vSegment, int splitRow) {
+        return null;
+    }
+
+//    Exercise 10: Resolve Cross Intersection
+//    Complete solution orchestrating previous exercises for maximum coverage calculation
+    public static int resolveCrossIntersection(HSegment hSegment, VSegment vSegment) {
+        return 0;
+    }
+}
+
