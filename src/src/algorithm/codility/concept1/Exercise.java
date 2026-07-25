@@ -67,7 +67,33 @@ public class Exercise {
 //    Scan each column and extract all continuous runs of specific cells as segments.
 
     public static List<VSegment> extractVerticalSegments(char[][] grid) {
-        return null;
+        List<VSegment> result = new ArrayList<>();
+        if (grid.length == 0) {
+            return result;
+        }
+        for (int i = 0; i < grid[0].length ; i++) {
+            int start = 0, end = 0;
+            boolean isClosed = true;
+            for (int j = 0; j < grid.length; j++) {
+                if (grid[j][i] != '.' && !isClosed) {
+                    VSegment vSegment = new VSegment(i, start, end);
+                    result.add(vSegment);
+                    isClosed = true;
+                    continue;
+                }
+                if (grid[j][i] == '.' && isClosed) {
+                    start = end = j;
+                    isClosed = false;
+                } else {
+                    end = j;
+                }
+            }
+            if (!isClosed) {
+                VSegment vSegment = new VSegment(i, start, end);
+                result.add(vSegment);
+            }
+        }
+        return result;
     }
 
 //    Exercise 3: Filter Best Per Row
