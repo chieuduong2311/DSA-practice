@@ -164,7 +164,13 @@ public class Exercise {
 //    Split horizontal segment at column (excluding that column)
 //    Return lengths of left and right parts. Clamp negatives to zero
     public static int[] splitHorizontalAtColumn(HSegment hSegment, int splitCol) {
-        return null;
+        if (splitCol > hSegment.colEnd) {
+            return new int[] {hSegment.length, 0};
+        }
+        if (splitCol < hSegment.colStart) {
+            return new int[] {0, hSegment.length};
+        }
+        return new int[] {splitCol - hSegment.colStart, hSegment.colEnd - splitCol};
     }
 
 //    Exercise 9: Split Vertical at Row
