@@ -1,7 +1,9 @@
 package algorithm.codility.concept1;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Exercise {
 
@@ -100,28 +102,54 @@ public class Exercise {
 //    From list of HSegments, keep only the longest segment for
 //    each unique row. This reduces search space for pair enumeration
     public static List<HSegment> filterBestPerRow(List<HSegment> hSegments) {
-        return null;
+        if (hSegments.isEmpty()) {
+            return  new ArrayList<>();
+        }
+        Map<Integer, HSegment> longestHSegmentMap = new HashMap<>();
+        for (HSegment hSegment : hSegments) {
+            longestHSegmentMap.computeIfAbsent(hSegment.row, k -> hSegment);
+            if (longestHSegmentMap.get(hSegment.row).length < hSegment.length) {
+                longestHSegmentMap.put(hSegment.row, hSegment);
+            }
+        }
+        return new ArrayList<>(longestHSegmentMap.values());
     }
 
 //    Exercise 4: Filter Best Per Column
 //    From list of VSegments, keep only the longest segment for
 //    each unique column.
     public static List<VSegment> filterBestPerColumn(List<VSegment> vSegments) {
-        return null;
+        if (vSegments.isEmpty()) {
+            return  new ArrayList<>();
+        }
+        Map<Integer, VSegment> longestVSegmentMap = new HashMap<>();
+        for (VSegment vSegment : vSegments) {
+            longestVSegmentMap.computeIfAbsent(vSegment.col, k -> vSegment);
+            if (longestVSegmentMap.get(vSegment.col).length < vSegment.length) {
+                longestVSegmentMap.put(vSegment.col, vSegment);
+            }
+        }
+        return new ArrayList<>(longestVSegmentMap.values());
     }
 
 //    Exercise 5: Check Horizontal Overlap
 //    Two horizontal segments overlap if they're on the same row and
 //    their column ranges overlap.
     public static boolean checkHorizontalOverlap(HSegment seg1, HSegment seg2) {
-        return false;
+        if (seg1.row != seg2.row) {
+            return false;
+        }
+        return !(seg2.colStart > seg1.colEnd || seg1.colStart > seg2.colEnd);
     }
 
 //    Exercise 6: Check Vertical Overlap
 //    Two vertical segments overlap if they're on the same column and
 //    their row ranges overlap.
     public static boolean checkVerticalOverlap(VSegment seg1, VSegment seg2) {
-        return false;
+        if (seg1.col != seg2.col) {
+            return false;
+        }
+        return !(seg2.rowStart > seg1.rowEnd || seg1.rowStart > seg2.rowEnd);
     }
 
 //    Exercise 7: Check Cross Intersection
@@ -129,11 +157,11 @@ public class Exercise {
 //    - V's columns is within H's column range
 //    - H's row is within V's row range
     public static boolean checkCrossIntersection(HSegment hSegment, VSegment vSegment) {
-        return false;
+        return vSegment.col >= hSegment.colStart && vSegment.col <= hSegment.colEnd && hSegment.row >= vSegment.rowStart && hSegment.row <= vSegment.rowEnd;
     }
 
 //    Exercise 8: Split Horizontal at Column
-//    Split horizontal segment at column (excluding thet column)
+//    Split horizontal segment at column (excluding that column)
 //    Return lengths of left and right parts. Clamp negatives to zero
     public static int[] splitHorizontalAtColumn(HSegment hSegment, int splitCol) {
         return null;
