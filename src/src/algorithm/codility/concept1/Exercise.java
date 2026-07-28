@@ -177,13 +177,25 @@ public class Exercise {
 //    Split vertical segment at row (excluding that row)
 //    Return lengths of top and bottom parts.
     public static int[] splitVerticalAtRow(VSegment vSegment, int splitRow) {
-        return null;
+        if (splitRow > vSegment.rowEnd) {
+            return new int[] {vSegment.length, 0};
+        }
+        if (splitRow < vSegment.rowStart) {
+            return new int[] {0, vSegment.length};
+        }
+        return new int[] {splitRow - vSegment.rowStart, vSegment.rowEnd - splitRow};
     }
 
 //    Exercise 10: Resolve Cross Intersection
 //    Complete solution orchestrating previous exercises for maximum coverage calculation
     public static int resolveCrossIntersection(HSegment hSegment, VSegment vSegment) {
-        return 0;
+        boolean isIntersect = checkCrossIntersection(hSegment, vSegment);
+        if (!isIntersect) {
+            return hSegment.length + vSegment.length;
+        }
+        int[] splitAtRow = splitVerticalAtRow(vSegment, hSegment.row);
+        int[] splitAtCol = splitHorizontalAtColumn(hSegment, vSegment.col);
+        return Math.max(hSegment.length + Math.max(splitAtRow[0], splitAtRow[1]), vSegment.length + Math.max(splitAtCol[0], splitAtCol[1]));
     }
 }
 
